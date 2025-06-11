@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect(process.env.MONGODB_URI).then(() => console.log("Database connected successfully")).catch(err => console.error("Database connection error:", err));
+mongoose.connect(process.env.MONGO_URI).then(() => console.log("Database connected successfully")).catch(err => console.error("Database connection error:", err));
 
 app.use('/api/books', require('./routes/bookRoutes'));
 
