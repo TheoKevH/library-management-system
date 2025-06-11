@@ -4,17 +4,17 @@ const Book = require('../models/Book');
 const auth = require('../middleware/auth'); 
 
 // POST endpoint to create a new book
-router.post('/', auth, async (req, res) => {
+router.post('/', auth, async (req, res, next) => {
   try {
     const newBook = await Book.create(req.body);
     res.status(201).json(newBook);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    next(err); 
   }
 });
 
 // GET endpoint to get data of all the books (BONUS: search feature)
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
   const { page = 1, search = '' } = req.query;
   const limit = 10;
   const query = {
@@ -37,38 +37,42 @@ router.get('/', async (req, res) => {
       currentPage: parseInt(page)
     });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 });
 
 // GET endpoint to get data of a specific book
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req, res, next) => {
   try {
     const book = await Book.findById(req.params.id);
-    if (!book) return res.status(404).json({ error: 'Book not found' });
+    if (!book) {
+        const err = new Error('Book not found');
+        err.statusCode = 404;
+        return next(err);
+    }
     res.json(book);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 });
 
 // PUT endpoint to edit a book
-router.put('/:id', auth, async (req, res) => {
+router.put('/:id', auth, async (req, res, next) => {
   try {
     const updatedBook = await Book.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.json(updatedBook);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    next(err);
   }
 });
 
 // DELETE endpoint to delete a book
-router.delete('/:id', auth, async (req, res) => {
+router.delete('/:id', auth, async (req, res, next) => {
   try {
     await Book.findByIdAndDelete(req.params.id);
     res.json({ message: 'Book deleted successfully' });
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    next(err);
   }
 });
 

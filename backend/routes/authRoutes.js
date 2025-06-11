@@ -5,23 +5,31 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 
 // POST endpoint to register a new user
-router.post('/register', async (req, res) => {
+router.post('/register', async (req, res, next) => {
   try {
     const user = await User.create(req.body);
     res.status(201).json({ message: 'User registered successfully' });
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    next(err); 
   }
 });
 
 // POST endpoint to login a user
-router.post('/login', async (req, res) => {
+router.post('/login', async (req, res, next) => {
   const { username, password } = req.body;
   const user = await User.findOne({ username });
-  if (!user) return res.status(404).json({ error: 'User not found' });
+  if (!user) {
+    const err = new Error('User not found');
+    err.statusCode = 404;
+    return next(err);
+  }
 
   const valid = await bcrypt.compare(password, user.password);
-  if (!valid) return res.status(401).json({ error: 'Invalid password' });
+  if (!valid) {
+    const err = new Error('Invalid password');
+    err.statusCode = 401;
+    return next(err);
+  }
 
   const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
