@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const Book = require('../models/Book');
+const auth = require('../middleware/auth'); 
 
 // POST endpoint to create a new book
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
   try {
     const newBook = await Book.create(req.body);
     res.status(201).json(newBook);
@@ -52,7 +53,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // PUT endpoint to edit a book
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth, async (req, res) => {
   try {
     const updatedBook = await Book.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.json(updatedBook);
@@ -62,7 +63,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // DELETE endpoint to delete a book
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
   try {
     await Book.findByIdAndDelete(req.params.id);
     res.json({ message: 'Book deleted successfully' });
