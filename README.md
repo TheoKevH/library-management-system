@@ -51,7 +51,7 @@ cd ../frontend
 npm start
 ```
 
-### Screenshots 
+## 😍 Screenshots 
 ![Home](7.png)
 ![1](1.png)
 ![2](2.png)
