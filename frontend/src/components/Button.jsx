@@ -1,10 +1,19 @@
 import React from 'react';
 
-const Button = ({ text, className = 'bg-lime-500 text-white', onClick }) => {
+const Button = ({
+  text,
+  type = 'button',
+  onClick,
+  className = '',
+}) => {
+  const baseStyle = 'px-6 py-2 rounded-full font-semibold transition-transform duration-300 ease-in-out hover:scale-105';
+  const defaultStyle = 'bg-lime-500 text-white';
+
   return (
     <button
+      type={type}
       onClick={onClick}
-      className={`px-6 py-2 rounded-full font-semibold transition-transform duration-300 ease-in-out hover:scale-105 ${className}`}
+      className={`${baseStyle} ${defaultStyle} ${className}`}
     >
       {text}
     </button>

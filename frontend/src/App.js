@@ -6,6 +6,7 @@ import BookList from './pages/BookList';
 import './App.css';
 import BookDetails from './pages/BookDetails';
 import AddBook from './pages/AddBook';
+import EditBook from './pages/EditBook';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/books" element={<BookList />} />
         <Route path="/books/:id" element={<BookDetails />} />
         <Route path="/add" element={<AddBook />} />
+        <Route path="/edit/:id" element={<EditBook />} />
 
       </Routes>
     </Router>

@@ -12,9 +12,9 @@ const Register = () => {
     const newErrors = {};
     if (!form.username) newErrors.username = 'Username is required';
     if (!form.email) newErrors.email = 'Email is required';
-    else if (!/\S+@\S+\.\S+/.test(form.email)) newErrors.email = 'Email is invalid';
+    else if (!/\S+@\S+\.\S+/.test(form.email)) newErrors.email = 'Please enter a valid email address';
     if (!form.password) newErrors.password = 'Password is required';
-    else if (form.password.length < 6) newErrors.password = 'Password must be at least 6 characters';
+    else if (form.password.length < 8) newErrors.password = 'Password must be at least 8 characters';
     return newErrors;
   };
 
@@ -50,6 +50,7 @@ const Register = () => {
           value={form.username}
           onChange={handleChange}
           error={errors.username}
+          placeholder="penguinsmart"
         />
         <InputField
           label="Email"
@@ -58,6 +59,7 @@ const Register = () => {
           value={form.email}
           onChange={handleChange}
           error={errors.email}
+          placeholder='youremail@gmail.com'
         />
         <InputField
           label="Password"
@@ -66,6 +68,7 @@ const Register = () => {
           value={form.password}
           onChange={handleChange}
           error={errors.password}
+          placeholder="********"
         />
         <button type="submit" className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition">
           Register
