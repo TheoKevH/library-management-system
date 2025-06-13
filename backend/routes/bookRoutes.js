@@ -16,7 +16,7 @@ router.post('/', auth, async (req, res, next) => {
 // GET endpoint to get data of all the books (BONUS: search feature)
 router.get('/', async (req, res, next) => {
   const { page = 1, search = '' } = req.query;
-  const limit = 10;
+  const limit = 8;
   const query = {
     $or: [
       { title: new RegExp(search, 'i') },

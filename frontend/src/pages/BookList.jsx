@@ -25,7 +25,7 @@ const BookList = () => {
 
   return (
     <div className="min-h-screen">
-      <div className="bg-cream w-full overflow-hidden flex justify-center px-4">
+      <div className="bg-cream w-full overflow-hidden flex justify-center px-4 mb-4">
         <img
           src="/hero.png"
           alt="Book Hero"
@@ -46,12 +46,16 @@ const BookList = () => {
         {books.length === 0 ? (
           <p className="text-gray-600">No books found.</p>
         ) : (
-          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+          <div className="grid gap-6 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
             {books.map((book) => (
-              <Link key={book._id} to={`/books/${book._id}`} className="bg-white rounded-lg shadow p-4 hover:shadow-md transition">
+              <Link key={book._id} to={`/books/${book._id}`}   className="p-4 flex flex-col items-center text-center">  
+                <img
+                    src="/cover.svg"
+                    alt={`${book.title} cover`}
+                    className="h-60 w-auto object-contain mb-4 hover:scale-[1.02] transition-transform duration-100"
+                />
                 <h2 className="text-lg font-bold mb-1">{book.title}</h2>
                 <p className="text-sm text-gray-700">by {book.author}</p>
-                <p className="text-xs text-gray-500 mt-2 italic">ISBN: {book.isbn}</p>
               </Link>
             ))}
           </div>
