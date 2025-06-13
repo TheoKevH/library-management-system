@@ -11,7 +11,7 @@ import EditBook from './pages/EditBook';
 function App() {
   return (
     <Router>
-      <Navbar />
+      <Navbar key={localStorage.getItem('username')} />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

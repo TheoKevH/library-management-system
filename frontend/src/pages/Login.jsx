@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import API from '../utils/api';
 import InputField from '../components/InputField';
+import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
   const [form, setForm] = useState({ identifier: '', password: '' });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const validate = () => {
     const newErrors = {};
@@ -29,8 +31,8 @@ const Login = () => {
 
     try {
       const res = await API.post('/auth/login', form);
-      localStorage.setItem('token', res.data.token);
-      navigate('/'); // redirect to book list
+      login(res.data.username, res.data.token);
+      navigate('/books'); 
     } catch (err) {
       alert(err.response?.data?.error || 'Login failed');
     }
