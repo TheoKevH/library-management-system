@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import API from '../utils/api';
 import Button from '../components/Button';
+import Modal from '../components/Modal';
 
 const BookDetails = () => {
   const { id } = useParams();
   const [book, setBook] = useState(null);
   const [error, setError] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBook = async () => {
@@ -20,6 +23,16 @@ const BookDetails = () => {
 
     fetchBook();
   }, [id]);
+
+  const handleDelete = async () => {
+    try {
+      await API.delete(`/books/${book._id}`);
+      alert('Book deleted successfully');
+      navigate('/books');
+    } catch (err) {
+      alert(err.response?.data?.error || 'Failed to delete book');
+    }
+  };
 
   if (error) {
     return (
@@ -48,23 +61,25 @@ const BookDetails = () => {
       <Button
         text="Delete"
         className="bg-red-500 hover:bg-red-600"
-        onClick={async () => {
-          const confirmed = window.confirm('Are you sure you want to delete this book?');
-          if (!confirmed) return;
-          try {
-            await API.delete(`/books/${book._id}`);
-            alert('Book deleted successfully');
-            window.location.href = '/books';
-          } catch (err) {
-            alert(err.response?.data?.error || 'Failed to delete book');
-          }
-        }}
+        onClick={() => setShowModal(true)}
       />
     </div>
 
     <div className="mt-4">
       <Link to="/books" className="text-blue-600 hover:underline">← Back to Book List</Link>
     </div>
+
+    <Modal
+        isOpen={showModal}
+        title="Delete Book"
+        message={
+          <>
+            Are you sure you want to delete <strong>{book.title}</strong>?
+          </>
+        }
+        onCancel={() => setShowModal(false)}
+        onConfirm={handleDelete}
+      />
   </div>
 );
 };
