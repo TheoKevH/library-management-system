@@ -12,13 +12,23 @@ const Navbar = () => {
     }`;
 
   return (
-    <nav className="bg-white shadow-md px-4 py-3 flex justify-between items-center rounded-b-2xl">
-      <div className="text-xl font-bold text-blue-700">📚 MyLibrary</div>
-      <div className="space-x-3">
-        <Link to="/" className={linkStyle('/')}>Home</Link>
-        <Link to="/books" className={linkStyle('/books')}>Books</Link>
-        <Link to="/register" className={linkStyle('/register')}>Sign Up</Link>
-        <Link to="/login" className={linkStyle('/login')}>Log In</Link>
+    <nav className="bg-cream px-8 py-4 flex justify-between items-center">
+      <div className="flex items-center space-x-2">
+        <img
+          src="/lmslogo.png"
+          alt="Logo"
+          className="h-10 w-10 object-contain"
+        />
+        <a href='/books' className="text-3xl font-bold text-gray-800">LMS</a>
+      </div>
+
+      <div className="space-x-4">
+        <Link to="/register" className={linkStyle('/register')}>
+          Sign Up
+        </Link>
+        <Link to="/login" className={linkStyle('/login')}>
+          Log In
+        </Link>
       </div>
     </nav>
   );

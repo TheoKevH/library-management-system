@@ -44,8 +44,6 @@ const BookList = () => {
             <div key={book._id} className="border rounded-lg p-4 shadow-sm bg-white">
               <h2 className="text-xl font-semibold">{book.title}</h2>
               <p className="text-gray-600">by {book.author}</p>
-              <p className="text-sm mt-2 text-gray-700">{book.description}</p>
-              <p className="text-xs mt-1 text-gray-400 italic">ISBN: {book.isbn}</p>
             </div>
           ))}
         </div>
