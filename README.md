@@ -32,11 +32,13 @@ npm install
 Create a .env file (backend/.env) with the following:
 
 `PORT=5000
+
 MONGO_URI=<your_mongodb_connection_string>
+
 JWT_SECRET=your_super_secret_key
 `
 
-### 4. Runt the program
+### 4. Run the program
 Backend:
 ```bash
 cd backend
@@ -49,3 +51,10 @@ cd ../frontend
 npm start
 ```
 
+### Screenshots 
+![1](1.png)
+![2](2.png)
+![3](3.png)
+![4](4.png)
+![5](5.png)
+![6](6.png)
