@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import API from '../utils/api';
 import { Link } from 'react-router-dom';
+import SearchBar from '../components/SearchBar';
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
@@ -33,15 +34,13 @@ const BookList = () => {
       </div>
 
       <div className="p-6 max-w-6xl mx-auto bg-white">
-        <input
-          type="text"
-          placeholder="Search by title or author..."
-          className="w-full p-3 border border-gray-300 rounded-full mb-6 shadow-sm"
+        <SearchBar
           value={search}
           onChange={(e) => {
             setPage(1);
             setSearch(e.target.value);
           }}
+          placeholder="Search by title or author"
         />
 
         {books.length === 0 ? (

@@ -6,7 +6,7 @@ const Navbar = () => {
   const location = useLocation();
 
   return (
-    <nav className="bg-cream px-8 py-4 flex justify-between items-center">
+    <nav className="sticky top-0 z-50 bg-cream px-8 py-4 flex justify-between items-center">
       <div className="flex items-center space-x-3">
         <img
           src="/lmslogo.png"
