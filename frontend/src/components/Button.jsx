@@ -7,7 +7,7 @@ const Button = ({
   className = '',
 }) => {
   const baseStyle = 'px-6 py-2 rounded-full font-semibold transition-transform duration-300 ease-in-out hover:scale-105';
-  const defaultStyle = 'bg-lime-500 text-white';
+  const defaultStyle = 'text-white';
 
   return (
     <button

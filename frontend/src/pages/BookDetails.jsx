@@ -64,8 +64,8 @@ const BookDetails = () => {
   }
 
   return (
-    <div className="bg-gray-50 min-h-screen p-4 sm:p-6 lg:p-8">
-      <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden">
+    <div className="bg-cream min-h-screen p-4 sm:p-6 lg:p-8">
+      <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-sm overflow-hidden">
         <div className="flex flex-col md:flex-row">
           
           <div className="w-full md:w-2/5 flex-shrink-0 bg-gray-100 flex items-center justify-center p-8">
@@ -93,7 +93,7 @@ const BookDetails = () => {
                 {user && (
                   <div className="flex flex-col sm:flex-row gap-4">
                     <Link to={`/edit/${book._id}`} className="w-full sm:w-auto">
-                      <Button text="Edit Details" className="bg-blue-600 text-white w-full" />
+                      <Button text="Edit Details" className="bg-lime-500 text-white w-full" />
                     </Link>
                     <Button
                       text="Delete Book"

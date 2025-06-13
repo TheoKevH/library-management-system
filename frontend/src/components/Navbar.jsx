@@ -16,6 +16,7 @@ const Navbar = () => {
     navigate('/books');
   };
 
+
   return (
     <nav className="sticky top-0 z-50 bg-cream px-8 py-4 flex justify-between items-center">
       <div className="flex items-center space-x-3">

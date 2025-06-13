@@ -16,7 +16,7 @@ const EditBook = () => {
         const res = await API.get(`/books/${id}`);
         setForm(res.data);
       } catch (err) {
-        alert('Failed to load book data');
+        console.error('Failed to load book data');
         navigate('/books');
       }
     };
@@ -46,36 +46,46 @@ const EditBook = () => {
 
     try {
       await API.put(`/books/${id}`, form);
-      alert('Book updated successfully');
       navigate(`/book/${id}`);
     } catch (err) {
-      alert(err.response?.data?.error || 'Failed to update book');
+      console.error(err.response?.data?.error || 'Failed to update book');
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
-        <h2 className="text-2xl font-bold mb-4 text-center">Edit Book</h2>
-
-        <InputField label="Title" type="text" name="title" value={form.title} onChange={handleChange} error={errors.title} />
-        <InputField label="Author" type="text" name="author" value={form.author} onChange={handleChange} error={errors.author} />
-        <InputField label="ISBN" type="text" name="isbn" value={form.isbn} onChange={handleChange} error={errors.isbn} />
-        
-        <div className="mb-4">
-          <label className="block mb-1 font-semibold">Description</label>
-          <textarea
-            name="description"
-            value={form.description}
-            onChange={handleChange}
-            className="w-full p-2 border rounded-lg focus:outline-none focus:ring"
-            rows={4}
-          />
-          {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description}</p>}
+    <div className="bg-gray-50 min-h-screen p-4 sm:p-6 lg:p-8">
+      <div className="max-w-4xl mx-auto">
+        <div className="bg-white rounded-2xl shadow-lg overflow-hidden md:flex">
+          <div className="w-full md:w-2/3">
+            <form onSubmit={handleSubmit} className="p-6 sm:p-8 h-full flex flex-col">
+              <div className="flex-grow">
+                <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">Edit Book</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-5">
+                  <InputField label="Title" name="title" value={form.title} onChange={handleChange} error={errors.title} />
+                  <InputField label="Author" name="author" value={form.author} onChange={handleChange} error={errors.author} />
+                </div>
+                <div className="mt-5">
+                  <InputField label="ISBN" name="isbn" value={form.isbn} onChange={handleChange} error={errors.isbn} />
+                </div>
+                <div className="mt-5">
+                  <InputField label="Description" type="textarea" name="description" value={form.description} onChange={handleChange} error={errors.description} />
+                </div>
+              </div>
+              <div className="mt-8 pt-6 border-t border-gray-200 flex flex-col-reverse sm:flex-row sm:justify-end gap-3">
+                <Button type="button" text="Cancel" className="bg-gray-300 text-gray-700 hover:bg-gray-300 w-full sm:w-auto" onClick={() => navigate(`/books/${id}`)} />
+                <Button type="submit" text="Save Changes" className="bg-lime-500 hover:bg-lime-600 text-white w-full sm:w-auto" />
+              </div>
+            </form>
+          </div>
+          <div className="hidden md:flex w-1/3 bg-gray-100 p-8 flex-col justify-center items-center text-center">
+            <div className="w-24 h-24 bg-lime-100 rounded-full flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-lime-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                </svg>
+            </div>
+          </div>
         </div>
-
-        <Button type="submit" text="Save Changes" />
-      </form>
+      </div>
     </div>
   );
 };
