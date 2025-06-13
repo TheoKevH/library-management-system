@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import API from '../utils/api';
 import InputField from '../components/InputField';
 import { useAuth } from '../context/AuthContext';
+import Button from '../components/Button';
 
 const Login = () => {
   const [form, setForm] = useState({ identifier: '', password: '' });
@@ -19,6 +20,10 @@ const Login = () => {
 
   const handleChange = e => {
     setForm({ ...form, [e.target.name]: e.target.value });
+    // Clear errors when user starts typing
+    if (errors[e.target.name]) {
+        setErrors({ ...errors, [e.target.name]: null });
+    }
   };
 
   const handleSubmit = async e => {
@@ -34,39 +39,69 @@ const Login = () => {
       login(res.data.username, res.data.token);
       navigate('/books'); 
     } catch (err) {
-      alert(err.response?.data?.error || 'Login failed');
+      const apiError = err.response?.data?.error || 'Login failed. Please check your credentials.';
+      setErrors({ form: apiError });
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gray-100">
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
-        <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
-        <InputField
-          label="Username or Email"
-          type="text"
-          name="identifier"
-          value={form.identifier}
-          onChange={handleChange}
-          error={errors.identifier}
-        />
-        <InputField
-          label="Password"
-          type="password"
-          name="password"
-          value={form.password}
-          onChange={handleChange}
-          error={errors.password}
-        />
-        <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">
-          Login
-        </button>
-        <p className="mt-4 text-sm text-center">
-          Don't have an account? <a href="/register" className="text-blue-600 underline">Register</a>
-        </p>
-      </form>
+    <div className="min-h-screen bg-gray-50 md:grid md:grid-cols-2 lg:grid-cols-5">
+        <div className="flex flex-col justify-center items-center w-full min-h-screen px-4 py-10 bg-white lg:col-span-2 ">
+            <div className="w-full max-w-sm mx-8">
+                <div className="text-left mb-8">
+                    <h1 className="text-3xl font-bold text-gray-900">Welcome To LMS!</h1>
+                    <p className="mt-2 text-gray-500">Please enter your details to sign in.</p>
+                </div>
+
+                <form onSubmit={handleSubmit}>
+                    <InputField
+                    label="Username or Email"
+                    type="text"
+                    name="identifier"
+                    value={form.identifier}
+                    onChange={handleChange}
+                    error={errors.identifier}
+                    placeholder='penguinsmart'
+                    />
+                    <InputField
+                    label="Password"
+                    type="password"
+                    name="password"
+                    value={form.password}
+                    onChange={handleChange}
+                    error={errors.password}
+                    placeholder='*********'
+                    />
+
+                    {errors.form && <p className="text-red-500 text-sm mb-4 text-center">{errors.form}</p>}
+                    
+                    <div className="mt-6">
+                        <Button type="submit" text="Sign In" className="bg-lime-500 hover:scale-105 text-white" />
+                    </div>
+
+                    <p className="mt-6 text-sm text-center text-gray-600">
+                    Don't have an account?{' '}
+                    <a href="/register" className="font-semibold text-lime-600 hover:underline">
+                        Register
+                    </a>
+                    </p>
+                </form>
+            </div>
+        </div>
+
+        <div className="hidden lg:col-span-3 lg:block bg-cream">
+            <div className="h-full w-full flex items-center justify-center">
+                <img
+                    src="/login.png"
+                    alt="login illustration"
+                    className="w-full h-full object-cover"
+                    onError={(e) => { e.target.onerror = null; e.target.src='https://placehold.co/800x1000/e2e8f0/334155?text=Image+Not+Found'; }}
+                />
+            </div>
+        </div>
     </div>
   );
 };
 
 export default Login;
+
