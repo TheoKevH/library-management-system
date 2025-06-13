@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import API from '../utils/api';
+import { Link } from 'react-router-dom';
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
@@ -42,8 +43,10 @@ const BookList = () => {
         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
           {books.map((book) => (
             <div key={book._id} className="border rounded-lg p-4 shadow-sm bg-white">
-              <h2 className="text-xl font-semibold">{book.title}</h2>
-              <p className="text-gray-600">by {book.author}</p>
+                <Link to={`/books/${book._id}`} className="text-xl font-semibold hover:underline">
+                {book.title}
+                </Link>
+                <p className="text-gray-600">by {book.author}</p>
             </div>
           ))}
         </div>
