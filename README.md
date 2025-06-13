@@ -31,12 +31,13 @@ npm install
 ### 3. Create Environment Variables
 Create a .env file (backend/.env) with the following:
 
-`PORT=5000
+````
+PORT=5000
 
 MONGO_URI=<your_mongodb_connection_string>
 
 JWT_SECRET=your_super_secret_key
-`
+````
 
 ### 4. Run the program
 Backend:
