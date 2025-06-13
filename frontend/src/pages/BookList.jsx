@@ -46,7 +46,7 @@ const BookList = () => {
         {books.length === 0 ? (
           <p className="text-gray-600">No books found.</p>
         ) : (
-          <div className="grid gap-6 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
+          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
             {books.map((book) => (
               <Link key={book._id} to={`/books/${book._id}`}   className="p-4 flex flex-col items-center text-center">  
                 <img
@@ -61,23 +61,46 @@ const BookList = () => {
           </div>
         )}
 
-        <div className="mt-8 flex justify-center items-center space-x-4">
-          <button
-            onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-            disabled={page === 1}
-            className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
-          >
-            Previous
-          </button>
-          <span className="text-gray-800">Page {page} of {totalPages}</span>
-          <button
-            onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
-            disabled={page === totalPages}
-            className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
-          >
-            Next
-          </button>
-        </div>
+        <div className="mt-8 flex justify-center items-center flex-wrap gap-2">
+            <button
+                onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                disabled={page === 1}
+                className={`px-3 py-2 rounded-full font-medium ${
+                page === 1
+                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    : 'bg-lime-500 text-white hover:bg-lime-600'
+                }`}
+            >
+                Prev
+            </button>
+
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((pg) => (
+                <button
+                key={pg}
+                onClick={() => setPage(pg)}
+                className={`px-4 py-2 rounded-full text-sm font-semibold transition ${
+                    pg === page
+                    ? 'bg-lime-500 text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+                >
+                {pg}
+                </button>
+            ))}
+
+            <button
+                onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+                disabled={page === totalPages}
+                className={`px-3 py-2 rounded-full font-medium ${
+                page === totalPages
+                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    : 'bg-lime-500 text-white hover:bg-lime-600'
+                }`}
+            >
+                Next
+            </button>
+            </div>
+
       </div>
     </div>
   );
