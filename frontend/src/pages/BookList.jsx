@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import API from '../utils/api';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
+import { useAuth } from '../context/AuthContext';
+import Button from '../components/Button'; 
+
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
 
   const fetchBooks = async () => {
     try {
@@ -42,6 +48,14 @@ const BookList = () => {
           }}
           placeholder="Search by title or author"
         />
+
+        {user && (
+            <Button
+            text="Add Book"
+            className="bg-lime-500 hover:bg-lime-600 mb-4 justify-end"
+            onClick={() => navigate('/add')}
+            />
+        )}
 
         {books.length === 0 ? (
           <p className="text-gray-600">No books found.</p>
